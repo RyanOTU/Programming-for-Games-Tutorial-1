@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour 
 {
     private float currentSpeed;
     private float currentDamage;

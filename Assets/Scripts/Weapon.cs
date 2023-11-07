@@ -6,6 +6,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    [SerializeField] private WeaponOS weaponStats;
     private Coroutine timerCoroutine;
     protected float currentChargeTime;
     private bool attackTimerDone = true;
@@ -20,7 +21,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void OnEnable()
     {
-        coolDown = new WaitForSeconds(coolDownTime);
+        weaponStats.coolDown = new WaitForSeconds(coolDownTime);
     }
     protected abstract void Attack(float chargePercent);
     protected virtual bool CanAttack()
