@@ -75,12 +75,12 @@ public class Player : MonoBehaviour
     }
     public void Shoot()
     {
-        isAttacking = !isAttacking;
-        if (!isAttacking) weapon.StartAttack();
-        else weapon.EndAttack();
+        //isAttacking = !isAttacking;
+        //if (!isAttacking) weapon.StartAttack();
+        //else weapon.EndAttack();
 
-        //Rigidbody rbBullet = Instantiate(projectile, projectilePos.position, projectilePos.rotation).GetComponent<Rigidbody>();
-        //rbBullet.velocity = transform.TransformDirection(new Vector3(0, 0, 25));
+        Rigidbody rbBullet = Instantiate(projectile, projectilePos.position, projectilePos.rotation).GetComponent<Rigidbody>();
+        rbBullet.velocity = transform.TransformDirection(new Vector3(0, 0, 25));
     }
     public void Die()
     {

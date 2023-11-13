@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -14,6 +15,7 @@ public class EnemyController : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet = false;
     public float walkPointRange;
+    public float speed = 5;
     
     //Attacking
     public GameObject projectile;
@@ -38,7 +40,12 @@ public class EnemyController : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
         if (playerInSightRange && playerInAttackRange) Attack();
-        if (!playerInSightRange && playerInAttackRange) Patrol();
+        if (!playerInSightRange) Patrol();
+        if (playerInSightRange)
+        {
+            Debug.Log("Fear the old blood");
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
     public void Attack()
     {
