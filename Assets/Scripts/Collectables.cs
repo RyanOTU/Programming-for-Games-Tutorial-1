@@ -8,7 +8,9 @@ using Unity.VisualScripting;
 public class Collectables : MonoBehaviour
 {
     [SerializeField] public TMP_Text _coinTextBox;
+    [SerializeField] public TMP_Text _AmmoTextBox;
     public string nameCollectable;
+    public WeaponBase weapon;
     public int score;
     public int restoreHp;
 
@@ -17,11 +19,19 @@ public class Collectables : MonoBehaviour
         this.nameCollectable = name;
         this.score = scoreValue;
         this.restoreHp = restoreHPValue;
-    } 
+    }
 
+    public Collectables(string name, WeaponBase _weapon)
+    {
+        this.weapon = _weapon;
+    }
     public void UpdateScore()
     {
         ScoreManager.scoreManager.UpdateScore(score);
+    }
+    public void UpdateAmmo(WeaponBase weapon)
+    {
+        ScoreManager.scoreManager.UpdateAmmo(weapon);
     }
     public void UpdateHealth()
     {

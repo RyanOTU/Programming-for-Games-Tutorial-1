@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
         if (!playerInSightRange) Patrol();
         if (playerInSightRange)
         {
-            Debug.Log("Fear the old blood");
+            //Debug.Log("Fear the old blood");
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }

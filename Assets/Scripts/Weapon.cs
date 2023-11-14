@@ -10,6 +10,7 @@ public abstract class Weapon : MonoBehaviour
     private Coroutine timerCoroutine;
     protected float currentChargeTime;
     private bool attackTimerDone = true;
+    public bool isFullAuto;
     protected Rigidbody owner;
 
     public float contactDamage;
@@ -17,13 +18,16 @@ public abstract class Weapon : MonoBehaviour
     public float minCharge;
 
     public WaitForSeconds coolDown;
+    private WaitUntil coolDownEnforce;
     public float coolDownTime;
 
     private void OnEnable()
     {
         weaponStats.coolDown = new WaitForSeconds(coolDownTime);
+        coolDownEnforce = new WaitUntil(() => !attackTimerDone);
     }
     protected abstract void Attack(float chargePercent);
+
     protected virtual bool CanAttack()
     {
         return attackTimerDone;
