@@ -13,11 +13,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpForce = 1;
 
     [SerializeField] private float _lookSensitivity = 5;
-    [SerializeField] private Camera playerCamera;
+    [SerializeField] public Camera playerCamera;
     [SerializeField] private Transform camFollowTarget;
     [SerializeField, Range(0, 180)] float viewAngleClamp = 40f;
     private Vector3 cameraRotation;
-    
+
     [SerializeField] private Rigidbody projectile;
     [SerializeField] public Transform projectilePos;
 
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     private Vector2 _moveDir;
     private Vector2 rotate;
+    [SerializeField] private EnemyController[] controlledEnemy;
 
     private Rigidbody rb;
     private bool isGrounded = false;
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
         transform.Translate(Vector3.forward * (_moveDir.y * Time.deltaTime * _moveSpeed), Space.Self);
         transform.Translate(Vector3.right * (_moveDir.x * Time.deltaTime * _moveSpeed), Space.Self);
         isGrounded = Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y);
-        SetLook(actions.Game.Look.ReadValue<Vector2>());
+        //SetLook(actions.Game.Look.ReadValue<Vector2>());
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             weapon = storedWeapons[0];
@@ -135,5 +136,14 @@ public class Player : MonoBehaviour
     {
         weapon.gameObject.SetActive(true);
         storedWeapons.Add(weapon);
+    }
+    public void MoveTo(Ray camToWorldRay)
+    {
+        if (!Physics.Raycast(camToWorldRay, out RaycastHit hitObj, StaticUtility.MoveLayer)) return;
+
+        foreach(EnemyController en in controlledEnemy)
+        {
+            en.MoveToTarget(hitObj.point);
+        }
     }
 }

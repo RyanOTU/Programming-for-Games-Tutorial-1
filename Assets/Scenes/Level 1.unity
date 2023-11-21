@@ -1665,7 +1665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429399192}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.03107598, y: 0.0436681, z: -0.0013589846, w: 0.99856174}
+  m_LocalRotation: {x: 0.03106102, y: 0.053542387, z: -0.0016662779, w: 0.998081}
   m_LocalPosition: {x: 0.12635994, y: 1.1499999, z: -2.78}
   m_LocalScale: {x: 0.2752202, y: 0.27522007, z: 0.2752201}
   m_ConstrainProportionsScale: 0
@@ -8778,6 +8778,7 @@ MonoBehaviour:
   sightRange: 10
   attackRange: 5
   agent: {fileID: 1196042163}
+  enemyDifficulty: 1
 --- !u!195 &1196042163
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9146,7 +9147,7 @@ MonoBehaviour:
   _moveSpeed: 5
   _jumpForce: 4
   _lookSensitivity: 0.25
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 1688480812}
   camFollowTarget: {fileID: 1196156838}
   viewAngleClamp: 40
   projectile: {fileID: 7256671161939472024, guid: f28fa2517409e394990f5b7d3e0771c8, type: 3}
@@ -9154,6 +9155,8 @@ MonoBehaviour:
   storedWeapons:
   - {fileID: 766975768485483836}
   weaponUI: {fileID: 35771688}
+  controlledEnemy:
+  - {fileID: 1196042162}
   gunParticles: {fileID: 459138151}
 --- !u!136 &1280704143
 CapsuleCollider:
@@ -10462,7 +10465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688480810}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.03107598, y: 0.0436681, z: -0.0013589846, w: 0.99856174}
+  m_LocalRotation: {x: 0.03106102, y: 0.053542387, z: -0.0016662779, w: 0.998081}
   m_LocalPosition: {x: 4.55779, y: 1.1039999, z: -3.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

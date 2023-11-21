@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Purchasing;
 using UnityEngine;
@@ -10,9 +11,14 @@ using UnityEngine.UIElements;
 public static class Controls
 {
     private static PlayerAction controls;
+    private static Player _owner;
     private static InputAction inputAction;
-    public static void Init(Player player)
+    private static Camera _camera;
+    public static void Init(Player player, Camera cam = null)
     {
+        ///This code absolutely breaks everything.
+        //BindNewPlayer(player);
+        //SetControllerCamera(cam ? cam : Camera.main);
         controls = new PlayerAction();
 
         controls.Game.Move.performed += ctx =>
@@ -31,12 +37,32 @@ public static class Controls
         {
             player.Shoot();
         };
+        controls.Game.MoveTo.performed += ctx =>
+        {
+            player.MoveTo(CamToWorldRay());
+        };
         PlayMode();
     }
-
-    private static void Shoot_performed(InputAction.CallbackContext obj)
+    public static void SetControllerCamera(Camera cam)
     {
-        throw new System.NotImplementedException();
+        _camera = cam;
+        _camera.transform.SetParent(_camera.transform, true);
+    }
+    public static void BindNewPlayer(Player newPlayer)
+    {
+        _owner = newPlayer;
+        _camera.transform.SetParent(_owner.transform, true);
+    }
+    public static void SetCommander(Player newTarget)
+    {
+        _owner = newTarget;
+        _camera.transform.SetParent(_owner.transform, true);
+    }
+
+    private static Ray CamToWorldRay()
+    {
+        return _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        _camera.transform.SetParent(_owner.transform, true);
     }
 
     public static void PlayMode() {

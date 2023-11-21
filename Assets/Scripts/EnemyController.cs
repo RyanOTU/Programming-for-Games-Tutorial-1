@@ -28,6 +28,14 @@ public class EnemyController : MonoBehaviour
     public float sightRange, attackRange;
 
     public NavMeshAgent agent;
+    public enum EnemyDifficulty
+    {
+        Easy,
+        Medium,
+        Hard,
+        Impossible
+    } public EnemyDifficulty enemyDifficulty;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +53,35 @@ public class EnemyController : MonoBehaviour
         {
             //Debug.Log("Fear the old blood");
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+
+        if (enemyDifficulty == EnemyDifficulty.Easy)
+        {
+            sightRange = 3;
+            attackRange = 1;
+            timeBetweenAttacks = 1f;
+            speed = 3;
+        }
+        if (enemyDifficulty == EnemyDifficulty.Medium)
+        {
+            sightRange = 5;
+            attackRange = 3;
+            timeBetweenAttacks = 0.5f;
+            speed = 5;
+        }
+        if (enemyDifficulty == EnemyDifficulty.Hard)
+        {
+            sightRange = 10;
+            attackRange = 5;
+            timeBetweenAttacks = 0.1f;
+            speed = 7;
+        }
+        if (enemyDifficulty == EnemyDifficulty.Impossible)
+        {
+            sightRange = 1000;
+            attackRange = 1000;
+            timeBetweenAttacks = 0;
+            speed = 10;
         }
     }
     public void Attack()
@@ -88,5 +125,10 @@ public class EnemyController : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         if (Physics.Raycast(walkPoint, -transform.up, 1f, groundLayer)) ;
+    }
+    public void MoveToTarget(Vector3 hitObjectResult)
+    {
+        agent.SetDestination(hitObjectResult);
+        agent.isStopped = false;
     }
 }

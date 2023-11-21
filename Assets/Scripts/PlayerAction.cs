@@ -71,6 +71,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveTo"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3a0e6e1e-6f06-4e36-82f6-303575f2e427"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3567326c-0b77-4535-a30f-651a367af4df"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +227,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
         m_Game_Look = m_Game.FindAction("Look", throwIfNotFound: true);
         m_Game_Shoot = m_Game.FindAction("Shoot", throwIfNotFound: true);
+        m_Game_MoveTo = m_Game.FindAction("MoveTo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Jump;
     private readonly InputAction m_Game_Look;
     private readonly InputAction m_Game_Shoot;
+    private readonly InputAction m_Game_MoveTo;
     public struct GameActions
     {
         private @PlayerAction m_Wrapper;
@@ -282,6 +304,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Game_Jump;
         public InputAction @Look => m_Wrapper.m_Game_Look;
         public InputAction @Shoot => m_Wrapper.m_Game_Shoot;
+        public InputAction @MoveTo => m_Wrapper.m_Game_MoveTo;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -306,6 +329,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @MoveTo.started += instance.OnMoveTo;
+            @MoveTo.performed += instance.OnMoveTo;
+            @MoveTo.canceled += instance.OnMoveTo;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -325,6 +351,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @MoveTo.started -= instance.OnMoveTo;
+            @MoveTo.performed -= instance.OnMoveTo;
+            @MoveTo.canceled -= instance.OnMoveTo;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -349,5 +378,6 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnMoveTo(InputAction.CallbackContext context);
     }
 }
